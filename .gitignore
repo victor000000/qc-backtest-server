@@ -1,0 +1,13 @@
+target/
+*.log
+logs/
+*.log.*
+qc-server.pid
+data/
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,30 @@
+[package]
+name = "qc-backtest-server"
+version = "1.0.1"
+edition = "2024"
+
+[[bin]]
+name = "qc-backtest-server"
+path = "src/main.rs"
+
+[lib]
+name = "qc"
+path = "src/lib.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.13", features = ["json", "multipart", "query"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json", "chrono"] }
+tracing-appender = "0.2"
+anyhow = "1"
+rusqlite = { version = "0.39", features = ["bundled"] }
+sha2 = "0.11"
+hex = "0.4"
+base64 = "0.22"
+clap = { version = "4", features = ["derive"] }
+dashmap = "6"
+fastrand = "2"
+futures = "0.3"
