@@ -180,7 +180,10 @@ where
 /// Parse a percentage string like "12.34%" -> 12.34, or a dollar string like "$1,234.56" -> 1234.56.
 pub(crate) fn parse_stat(s: &str) -> Option<f64> {
     let cleaned = s.replace(['$', '%', ',', ' '], "");
-    cleaned.parse().ok()
+    cleaned
+        .parse::<f64>()
+        .ok()
+        .filter(|value| value.is_finite())
 }
 
 /// Parse a QC statistics map value to f64.
@@ -196,4 +199,19 @@ pub(crate) fn stat_i64(
     key: &str,
 ) -> Option<i64> {
     stats.get(key).and_then(|v| v.replace(',', "").parse().ok())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::parse_stat;
+
+    #[test]
+    fn statistics_reject_nonfinite_values() {
+        for input in ["NaN", "inf", "-inf", "1e999", "", "unknown"] {
+            assert_eq!(parse_stat(input), None, "{input}");
+        }
+        assert_eq!(parse_stat("$1,234.56"), Some(1234.56));
+        assert_eq!(parse_stat("-12.34%"), Some(-12.34));
+        assert_eq!(parse_stat("0"), Some(0.0));
+    }
 }

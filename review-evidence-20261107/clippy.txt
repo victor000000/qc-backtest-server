@@ -1,0 +1,2 @@
+    Checking qc-backtest-server v1.1.1 (/home/vic/github-cleanup-20261105/ci-work/qc-backtest-server)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.82s
